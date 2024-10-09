@@ -17,4 +17,4 @@ jobs:
       run: Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
     - name: Create Tunnel using Serveo.net
       run: |
-        ssh -o StrictHostKeyChecking=no -R 3389:localhost:3389 serveo.net
+        ssh -o StrictHostKeyChecking=no -R 3389:localhost:49000 serveo.net
