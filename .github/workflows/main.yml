@@ -15,5 +15,6 @@ jobs:
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Mahmoud*123" -Force)
     - name: Install OpenSSH Client
       run: Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
-    - name: Create Tunnel using localhost.run
-      run: ssh -R 80:localhost:3389 ssh.localhost.run
+    - name: Create Tunnel using Serveo.net
+      run: |
+        ssh -o StrictHostKeyChecking=no -R 80:localhost:49000 serveo.net
