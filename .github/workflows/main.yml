@@ -20,3 +20,32 @@ jobs:
     - name: Create Tunnel using Serveo.net
       run: 
         ssh -o StrictHostKeyChecking=no -R 49000:localhost:3389 serveo.net
+    # Install RustDesk for remote access
+    - name: Install RustDesk
+      run: |
+        Invoke-WebRequest -Uri https://github.com/rustdesk/rustdesk/releases/download/1.1.9/rustdesk-1.1.9-windows_x64.exe -OutFile rustdesk.exe
+        Start-Process .\rustdesk.exe -ArgumentList '/verysilent' -Wait
+
+    # Install Office 365 (Office Deployment Tool)
+    - name: Download Office Deployment Tool
+      run: |
+        Invoke-WebRequest -Uri https://aka.ms/O365DeployTool -OutFile OfficeSetup.exe
+        Start-Process .\OfficeSetup.exe -ArgumentList '/quiet' -Wait
+        New-Item -Path "C:\ODT" -ItemType Directory
+        Set-Content -Path "C:\ODT\configuration.xml" -Value @"
+        <Configuration>
+          <Add OfficeClientEdition="64" Channel="Current">
+            <Product ID="O365ProPlusRetail">
+              <Language ID="en-us" />
+            </Product>
+          </Add>
+          <Display Level="None" AcceptEULA="TRUE" />
+        </Configuration>
+        "@
+
+    - name: Install Office 365
+      run: |
+        cd C:\ODT
+        .\OfficeSetup.exe /configure configuration.xml
+
+
