@@ -24,27 +24,6 @@ jobs:
         Invoke-WebRequest -Uri https://github.com/rustdesk/rustdesk/releases/download/1.3.1/rustdesk-1.3.1-x86_64.exe -OutFile rustdesk.exe
         Start-Process .\rustdesk.exe -ArgumentList '/verysilent' 
 
-    # Install Office 365 (Office Deployment Tool)
-    - name: Download Office Deployment Tool
-      run: |
-        Invoke-WebRequest -Uri https://aka.ms/O365DeployTool -OutFile OfficeSetup.exe
-        Start-Process .\OfficeSetup.exe -ArgumentList '/quiet' 
-        New-Item -Path "C:\ODT" -ItemType Directory
-        Set-Content -Path "C:\ODT\configuration.xml" -Value @"
-        <Configuration>
-          <Add OfficeClientEdition="64" Channel="Current">
-            <Product ID="O365ProPlusRetail">
-              <Language ID="en-us" />
-            </Product>
-          </Add>
-          <Display Level="None" AcceptEULA="TRUE" />
-        </Configuration>
-        "@
-
-    - name: Install Office 365
-      run: |
-        cd C:\ODT
-        .\OfficeSetup.exe /configure configuration.xml
     - name: Create Tunnel using Serveo.net
       run: 
         ssh -o StrictHostKeyChecking=no -R 49000:localhost:3389 serveo.net
