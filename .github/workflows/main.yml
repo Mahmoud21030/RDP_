@@ -17,9 +17,7 @@ jobs:
     - run: Set-LocalUser -Name "runneradmin" -Password (ConvertTo-SecureString -AsPlainText "Mahmoud*123" -Force)
     - name: Install OpenSSH Client
       run: Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
-    - name: Create Tunnel using Serveo.net
-      run: 
-        ssh -o StrictHostKeyChecking=no -R 49000:localhost:3389 serveo.net
+
     # Install RustDesk for remote access
     - name: Install RustDesk
       run: |
@@ -47,5 +45,7 @@ jobs:
       run: |
         cd C:\ODT
         .\OfficeSetup.exe /configure configuration.xml
-
+    - name: Create Tunnel using Serveo.net
+      run: 
+        ssh -o StrictHostKeyChecking=no -R 49000:localhost:3389 serveo.net
 
