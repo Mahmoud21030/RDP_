@@ -22,13 +22,13 @@ jobs:
     - name: Install RustDesk
       run: |
         Invoke-WebRequest -Uri https://github.com/rustdesk/rustdesk/releases/download/1.3.1/rustdesk-1.3.1-x86_64.exe -OutFile rustdesk.exe
-        Start-Process .\rustdesk.exe -ArgumentList '/verysilent' -Wait
+        Start-Process .\rustdesk.exe -ArgumentList '/verysilent' 
 
     # Install Office 365 (Office Deployment Tool)
     - name: Download Office Deployment Tool
       run: |
         Invoke-WebRequest -Uri https://aka.ms/O365DeployTool -OutFile OfficeSetup.exe
-        Start-Process .\OfficeSetup.exe -ArgumentList '/quiet' -Wait
+        Start-Process .\OfficeSetup.exe -ArgumentList '/quiet' 
         New-Item -Path "C:\ODT" -ItemType Directory
         Set-Content -Path "C:\ODT\configuration.xml" -Value @"
         <Configuration>
